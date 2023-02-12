@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadescription %}
+    {% if category %}
+        {{category.description|truncatewords:155}}
+    {% else %}
+        Welcome to ABC-Fashion Store where you can find your styles....moving with trends!!!!!
+    {% endif %}
+{% endblock %}
+<br>
+
+{% block title %}
+    {% if category %}
+        {{category.name}} -- ABC -Fashion Store
+    {% else %}
+        our new and trendy collections brings out fashion in you *****
+    {% endif %}
+{% endblock %}
+
+<br>
+
+{% block content %}
+
+{% if category %}
+    <div classs="row my_row_class">
+      <div class="mx_auto">
+        <p> <a href="{% url 'shopapp:allproducts' %}"> our new Products </a>
+        </p>
+      </div>
+         </div>
+        {% endif %}
+        <div>
+            {% if category %}
+                <img class="my_image" src="{{category.image.url}}" alt="{{category.name}}">
+
+        </div>
+        <br>
+         <div>
+                <h1 class="text-center my_title"> {{category.name}}</h1>
+        </div>
+
+        <div>
+                <p class="text-justify">{{category.description}}</p>
+        </div>
+            {% else %}
+
+<div>
+    <div>
+        <img  class="my_image  my_image_padding" src="{% static 'img/banner.png' %}" alt="ABC-Fashion Store finds your style" ;>
+    </div><br>
+    <div>
+        <h1 class="text-center my_title">Our new collections</h1>
+        <p class="text-justify">You might already be familiar with fashion-forward contemporary brands like Ganni, Staud, and Nanushka—but a new class of minimal, neutral palette–loving labels has emerged. From LVIR to Loulou Studio to Totême, a mix of up-and-coming and well-established labels are finding success within the more approachable and price-conscious space they occupy in the contemporary category of the womenswear market. Their devotees are style-conscious individuals who don’t want to compromise on taste, prefer slow to fast fashion, and gravitate toward minimalism.</p>
+    </div>
+        {% endif %}
+
+</div>
+<div class="container">
+    <div class="row mx_auto">
+        {% for product in products.object_list %}
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-lg-4">
+            <div class="card text-center" style="min-width:18rem">
+                <a href="{{product.get_url}}"><img  width="1700px;" height="230px;" class="card-img-top" src="{{product.image.url}}" alt="{{product.name}}"></a>
+            </div>
+            <div class="card-body">
+                <h4 class="text-center">{{product.name}}</h4>
+                 <p class="text-center">{{product.price}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+        {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-dark btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+        {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

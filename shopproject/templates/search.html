@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadescription %}
+continue shopping to purchase your favorites
+{% endblock %}
+
+{% block title %}
+Search
+{% endblock %}
+
+{% block content %}
+<div>
+    <p class="text-center my_search_title"> You have searched for: <b>"{{query}}"</b></p>
+</div>
+<div class="container">
+    <div class="row mx_auto">
+        {% for product in products %}
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-lg-4">
+            <div class="card text-center" style="min-width:18rem">
+                <a href="{{product.get_url}}"><img  width="1700px;" height="230px;" class="card-img-top" src="{{product.image.url}}" alt="{{product.name}}"></a>
+            </div>
+            <div class="card-body">
+                <h4 class="text-center">{{product.name}}</h4>
+                 <p class="text-center">{{product.price}}</p>
+            </div>
+        </div>
+        {% empty %}
+        <div class=" text-center row mx_auto">
+            <p class="text-center my_search_title"> <b> 0 </b>Results Found</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
